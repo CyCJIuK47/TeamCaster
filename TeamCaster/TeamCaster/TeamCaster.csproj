@@ -63,6 +63,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\Network\Client.cs" />
+    <Compile Include="Core\Network\INetworkDataReceiver.cs" />
+    <Compile Include="Core\Network\INetworkDataSender.cs" />
+    <Compile Include="Core\Network\IO\TCPPacket.cs" />
+    <Compile Include="Core\Network\IO\TCPPacketManager.cs" />
     <Compile Include="MVVM\ViewModels\Base\ViewModel.cs" />
     <Compile Include="MVVM\Views\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -96,7 +101,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Core\" />
     <Folder Include="MVVM\Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
