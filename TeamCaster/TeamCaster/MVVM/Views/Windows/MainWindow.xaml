@@ -3,10 +3,73 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TeamCaster"
+        xmlns:local="clr-namespace:TeamCaster" xmlns:viewmodels="clr-namespace:TeamCaster.MVVM.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="650" Width="1200"
+        Background="#36393F"
+        WindowStyle="None"
+        AllowsTransparency="True">
+    
+    <Window.DataContext>
+        <viewmodels:MainViewModel/>
+    </Window.DataContext>
+    
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25">
+                
+            </RowDefinition>
+            <RowDefinition>
+                
+            </RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.ColumnSpan="2"
+                Background="#252525"
+                MouseDown="Border_MouseDown">
+
+            <Grid HorizontalAlignment="Stretch">
+                <Label Content="TeamCaster"
+                       Foreground="Gray"
+                       FontWeight="SemiBold"/>
+                
+                <StackPanel HorizontalAlignment="Right"
+                            Orientation="Horizontal">
+                    
+                    <Button Width="20" Height="20"
+                            Content="🗕"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="Gray"
+                            FontWeight="Bold"
+                            Margin="0,0,0,3"
+                            Click="MinimizeButton_Click"/>
+                    
+                    <Button Width="20" Height="20"
+                            Content="◻"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="Gray"
+                            FontWeight="Bold"
+                            Click="MaximizeButton_Click"/>
+
+                    <Button Width="20" Height="20"
+                            Content="⨉"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="Gray"
+                            FontWeight="Bold"
+                            Click="CloseButton_Click"/>
+
+                </StackPanel>
+                
+            </Grid>
+        </Border>
         
     </Grid>
 </Window>
