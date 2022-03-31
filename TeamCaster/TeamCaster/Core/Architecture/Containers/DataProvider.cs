@@ -1,8 +1,9 @@
 ﻿using System;
+using TeamCaster.Core.Architecture.Observer;
 
 namespace TeamCaster.Core.Architecture.Containers
 {
-    class DataProvider<T>
+    class DataProvider<T> : ISubscriber
     {
         private T _data;
 
@@ -24,5 +25,10 @@ namespace TeamCaster.Core.Architecture.Containers
         }
 
         public event Action<object, T> DataAvailable;
+
+        public void Update(dynamic context)
+        {
+            Data = (T)context;
+        }
     }
 }

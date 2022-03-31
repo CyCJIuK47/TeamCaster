@@ -94,6 +94,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Architecture\Containers\DataProvider.cs" />
+    <Compile Include="Core\Architecture\Observer\DataPublisher.cs" />
+    <Compile Include="Core\Architecture\Observer\ISubscriber.cs" />
+    <Compile Include="Core\Architecture\ReceivedDataHandler.cs" />
     <Compile Include="Core\Audio\AudioPlayer.cs" />
     <Compile Include="Core\Audio\IO\Codecs\IAudioCodec.cs" />
     <Compile Include="Core\Audio\IO\Codecs\NoCompressionCodec.cs" />
