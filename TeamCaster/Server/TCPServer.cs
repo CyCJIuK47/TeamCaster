@@ -90,11 +90,19 @@ namespace Server
         {
             while (true)
             {
-                byte[] data = this.Receive(newClient);
+                try
+                {
+                    byte[] data = this.Receive(newClient);
 
-                _logger?.Log("Server", $"Received data from {newClient.RemoteEndPoint}");
+                    _logger?.Log("Server", $"Received data from {newClient.RemoteEndPoint}");
 
-                this.Send(newClient, data);
+                    this.Send(newClient, data);
+                }
+                catch
+                {
+                    _logger?.Log("Server|ConnectionLost", $"{newClient.RemoteEndPoint}");
+                    return;
+                }
             }
         }
     }

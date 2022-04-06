@@ -8,7 +8,8 @@
         Title="MainWindow" Height="650" Width="1200"
         Background="#36393F"
         WindowStyle="None"
-        AllowsTransparency="True">
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip">
     
     <Window.DataContext>
         <viewmodels:MainViewModel/>
@@ -70,6 +71,139 @@
                 
             </Grid>
         </Border>
+
+        <Grid Background="#2F3136"
+              Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Connected Users:"
+                   VerticalAlignment="Center"
+                   FontWeight="Medium"
+                   Foreground="Gray"/>
+
+            <ListView Background="Transparent"
+                      BorderThickness="0"
+                      Grid.Row="1"
+                      ItemContainerStyle="{StaticResource UserCard}"
+                      ItemsSource="{Binding UserPoolViewModel.Users}">
+                
+            </ListView>
+
+            <StackPanel Grid.Row="2"
+                        Orientation="Horizontal"
+                        Background="#292b2F">
+
+                <Border CornerRadius="25"
+                        Width="30" Height="30"
+                        Background="#3bff6f"
+                        Margin="18,0,0,0"/>
+
+                <StackPanel VerticalAlignment="Center">
+                    <Label Content="Username"
+                           Foreground="White"
+                           FontWeight="SemiBold"
+                           Margin="0,-5,0,-5"/>
+                    <Label Content="Status"
+                           Foreground="Gray"
+                           FontWeight="SemiBold"
+                           FontSize="12"
+                           Margin="0,-8,0,-5"/>
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Margin="15,0,0,0">
+
+                    <Button Width="25" Height="25"
+                            BorderThickness="0"
+                            Background="Transparent" Command="{Binding AudioSystemViewModel.MicrophoneRecorderViewModel.ToggleRecording}">
+                        <Image 
+                               RenderOptions.BitmapScalingMode="Fant"
+                               Source="{Binding AudioSystemViewModel.MicrophoneRecorderViewModel.ImageSource}"/>
+                    </Button>
+
+                    <Button Width="25" Height="25"
+                            BorderThickness="0"
+                            Margin="5,0,0,0"
+                            Background="Transparent" Command="{Binding AudioSystemViewModel.AudioPlayerViewModel.ToggleMuteState}">
+                        <Image Width="25" Height="25"
+                               RenderOptions.BitmapScalingMode="Fant"
+                               Source="{Binding AudioSystemViewModel.AudioPlayerViewModel.ImageSource}"
+                               />
+                        
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+
+        <Grid Grid.Row="1"
+              Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+
+            <Border BorderBrush="#2F3136"
+                    BorderThickness="0,0,0,2">
+                <Grid HorizontalAlignment="Stretch"
+                      Margin="8">
+                    
+                    <Label Content="Noone is starting ScreenSharing right now."
+                           Foreground="White"
+                           FontWeight="Bold"
+                           Margin="5,0,5,0"
+                           VerticalAlignment="Center"
+                           />
+
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+
+                        
+                    </StackPanel>
+                    
+                </Grid>
+            </Border>
+
+            <ListView Grid.Row="1"
+                      ItemsSource="{Binding ChatViewModel.Messages, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"                      
+                      Background="Transparent"
+                      BorderThickness="0"
+                      Margin="8,0,0,0"
+                      ItemContainerStyle="{StaticResource ChatItem}">
+                
+            </ListView>
+
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="90"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Height="50"
+                         Text="@Message"
+                         Style="{StaticResource MessageBox}"
+                         Grid.ColumnSpan="2"
+                         Margin="5,0,5,0">
+                    
+                </TextBox>
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Grid.Column="1"
+                            Margin="0,0,15,0">
+                    
+                </StackPanel>
+            
+            </Grid>
+            
+        </Grid>
         
     </Grid>
 </Window>

@@ -85,6 +85,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="MVVM\Themes\ChatItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\Themes\MessageBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\Themes\UserCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\Views\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -108,8 +120,18 @@
     <Compile Include="Core\Network\INetworkDataSender.cs" />
     <Compile Include="Core\Network\IO\TCPPacket.cs" />
     <Compile Include="Core\Network\IO\TCPPacketManager.cs" />
+    <Compile Include="MVVM\Commands\Base\Command.cs" />
+    <Compile Include="MVVM\Commands\RelayCommand.cs" />
+    <Compile Include="MVVM\Models\MessageModel.cs" />
+    <Compile Include="MVVM\Models\UserModel.cs" />
+    <Compile Include="MVVM\ViewModels\AudioPlayerViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\AudioSystemViewModel.cs" />
     <Compile Include="MVVM\ViewModels\Base\ViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\ChatViewModel.cs" />
     <Compile Include="MVVM\ViewModels\MainViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\MicrophoneRecorderViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\NetworkViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\UserPoolViewModel.cs" />
     <Compile Include="MVVM\Views\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -144,7 +166,24 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\ScreenSharing\" />
-    <Folder Include="MVVM\Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icons\microphone-off.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icons\microphone-on.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icons\headphone-off.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\headphone-on.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
