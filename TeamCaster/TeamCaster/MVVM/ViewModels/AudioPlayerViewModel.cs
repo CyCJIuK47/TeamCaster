@@ -3,6 +3,7 @@ using TeamCaster.Core.Architecture.Containers;
 using TeamCaster.Core.Audio;
 using TeamCaster.MVVM.Commands;
 using TeamCaster.MVVM.ViewModels.Base;
+using TeamCaster.Core.Audio.IO.Codecs;
 
 namespace TeamCaster.MVVM.ViewModels
 {
@@ -16,8 +17,8 @@ namespace TeamCaster.MVVM.ViewModels
 
         private string _imageSource;
 
-        public string ImageSource { 
-            get => _imageSource; 
+        public string ImageSource{ 
+            get => _imageSource;
             set => Set(ref _imageSource, value);
         }
 
@@ -25,7 +26,7 @@ namespace TeamCaster.MVVM.ViewModels
 
         public AudioPlayerViewModel()
         {
-            _audioPlayer = new AudioPlayer(DataProvider);
+            _audioPlayer = new AudioPlayer(DataProvider, new G722AudioCodec());
             ToggleMuteState = new RelayCommand((object p) => {
                 _audioPlayer.Muted = !_audioPlayer.Muted;
                 ImageSource = _imagesSources[Convert.ToInt32(_audioPlayer.Muted)];

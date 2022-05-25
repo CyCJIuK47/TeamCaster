@@ -11,9 +11,9 @@
         AllowsTransparency="True"
         ResizeMode="CanResizeWithGrip">
     
-    <Window.DataContext>
+    <!--Window.DataContext>
         <viewmodels:MainViewModel/>
-    </Window.DataContext>
+    </Window.DataContext-->
     
     <Grid>
         <Grid.RowDefinitions>
@@ -48,7 +48,7 @@
                             BorderThickness="0"
                             Foreground="Gray"
                             FontWeight="Bold"
-                            Margin="0,0,0,3"
+                            VerticalContentAlignment="Top"
                             Click="MinimizeButton_Click"/>
                     
                     <Button Width="20" Height="20"
@@ -80,10 +80,23 @@
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
 
-            <Label Content="Connected Users:"
-                   VerticalAlignment="Center"
-                   FontWeight="Medium"
-                   Foreground="Gray"/>
+            <StackPanel VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                
+                <Label Content="Connected Users:"
+                       VerticalAlignment="Center"
+                       FontWeight="Medium"
+                       Margin="8,0,0,0"
+                       Foreground="Gray"/>
+                
+                <Label Content="{Binding UserPoolViewModel.Users.Count, UpdateSourceTrigger=PropertyChanged}"
+                       VerticalAlignment="Center"
+                       FontWeight="Medium"
+                       Margin="0,0,0,0"
+                       Foreground="Gray"/>
+                
+            </StackPanel>
+
 
             <ListView Background="Transparent"
                       BorderThickness="0"
@@ -103,7 +116,7 @@
                         Margin="18,0,0,0"/>
 
                 <StackPanel VerticalAlignment="Center">
-                    <Label Content="Username"
+                    <Label Content="{Binding UserInfoViewModel.Username}"
                            Foreground="White"
                            FontWeight="SemiBold"
                            Margin="0,-5,0,-5"/>
@@ -158,12 +171,30 @@
                            Foreground="White"
                            FontWeight="Bold"
                            Margin="5,0,5,0"
-                           VerticalAlignment="Center"
-                           />
+                           VerticalAlignment="Center"/>
 
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Right">
 
+                        <Button Width="25" Height="25"
+                                Margin="0,0,5,0"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Command="{Binding OpenScreenViewWindow}">
+
+                            <Image Source="./../../../Icons/open-stream.png"/>
+
+                        </Button>
+
+                        <Button Width="25" Height="25"
+                                Margin="0,0,5,0"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Command="{Binding ScreenSharingViewModel.ToggleRecording}">
+
+                            <Image Source="{Binding ScreenSharingViewModel.ImageSource}"/>
+
+                        </Button>
                         
                     </StackPanel>
                     
@@ -178,6 +209,8 @@
                       ItemContainerStyle="{StaticResource ChatItem}">
                 
             </ListView>
+
+            
 
 
             <Grid Grid.Row="2">

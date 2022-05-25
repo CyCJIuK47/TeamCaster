@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Windows.Input;
 using TeamCaster.Core.Network;
-using TeamCaster.MVVM.ViewModels.Base;
 using TeamCaster.MVVM.Commands;
+using TeamCaster.MVVM.ViewModels.Base;
 
 namespace TeamCaster.MVVM.ViewModels
 {
@@ -19,13 +18,11 @@ namespace TeamCaster.MVVM.ViewModels
             _client.Send(data);
         }
 
-        public NetworkViewModel()
+        public NetworkViewModel(TCPClient client)
         {
-            _client = new TCPClient("127.0.0.1", 22222);
+            _client = client;
             
             Connect = new RelayCommand((object p) => _client.Connect(), (object p) => true);
-
-            Connect.Execute(null);
         }
 
     }

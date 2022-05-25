@@ -2,6 +2,7 @@
 using System.Threading;
 using TeamCaster.Core.Audio;
 using TeamCaster.Core.Audio.IO;
+using TeamCaster.Core.Audio.IO.Codecs;
 using TeamCaster.MVVM.Commands;
 using TeamCaster.MVVM.ViewModels.Base;
 

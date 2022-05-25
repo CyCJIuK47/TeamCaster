@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Blend.Sdk.WPF.1.0.1\lib\net45\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Win32.Registry, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Registry.4.7.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
     </Reference>
@@ -61,11 +64,16 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Security.AccessControl, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.AccessControl.4.7.0\lib\net461\System.Security.AccessControl.dll</HintPath>
     </Reference>
     <Reference Include="System.Security.Principal.Windows, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Principal.Windows.4.7.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Blend.Sdk.WPF.1.0.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -86,6 +94,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="MVVM\Themes\ChatItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\Themes\InputField.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -110,16 +122,26 @@
     <Compile Include="Core\Architecture\Observer\ISubscriber.cs" />
     <Compile Include="Core\Architecture\ReceivedDataHandler.cs" />
     <Compile Include="Core\Audio\AudioPlayer.cs" />
+    <Compile Include="Core\Audio\IO\Codecs\G772AudioCodec.cs" />
     <Compile Include="Core\Audio\IO\Codecs\IAudioCodec.cs" />
     <Compile Include="Core\Audio\IO\Codecs\NoCompressionCodec.cs" />
     <Compile Include="Core\Audio\IO\IAudioSender.cs" />
     <Compile Include="Core\Audio\IO\NetworkAudioSender.cs" />
     <Compile Include="Core\Audio\MicrophoneRecorder.cs" />
+    <Compile Include="Core\Interactivity\ActionRecorder.cs" />
+    <Compile Include="Core\Interactivity\IO\MouseEvent.cs" />
+    <Compile Include="Core\Interactivity\IO\MouseEventType.cs" />
+    <Compile Include="Core\Interactivity\MouseSimulator.cs" />
     <Compile Include="Core\Network\Client.cs" />
     <Compile Include="Core\Network\INetworkDataReceiver.cs" />
     <Compile Include="Core\Network\INetworkDataSender.cs" />
     <Compile Include="Core\Network\IO\TCPPacket.cs" />
     <Compile Include="Core\Network\IO\TCPPacketManager.cs" />
+    <Compile Include="Core\Network\Pulse\Pulse.cs" />
+    <Compile Include="Core\ScreenSharing\IO\ScreenFrame.cs" />
+    <Compile Include="Core\ScreenSharing\IO\ScreenSharingOptions.cs" />
+    <Compile Include="Core\ScreenSharing\ScreenRecorder.cs" />
+    <Compile Include="Core\ScreenSharing\ScreenViewer.cs" />
     <Compile Include="MVVM\Commands\Base\Command.cs" />
     <Compile Include="MVVM\Commands\RelayCommand.cs" />
     <Compile Include="MVVM\Models\MessageModel.cs" />
@@ -128,16 +150,35 @@
     <Compile Include="MVVM\ViewModels\AudioSystemViewModel.cs" />
     <Compile Include="MVVM\ViewModels\Base\ViewModel.cs" />
     <Compile Include="MVVM\ViewModels\ChatViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\EntryPointViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\InteractivityViewModel.cs" />
     <Compile Include="MVVM\ViewModels\MainViewModel.cs" />
     <Compile Include="MVVM\ViewModels\MicrophoneRecorderViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\MouseSimulatorViewModel.cs" />
     <Compile Include="MVVM\ViewModels\NetworkViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\ScreenSharingViewModel.cs" />
+    <Compile Include="MVVM\ViewModels\UserInfoViewModel.cs" />
     <Compile Include="MVVM\ViewModels\UserPoolViewModel.cs" />
     <Compile Include="MVVM\Views\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MVVM\Views\Windows\ScreenSharingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\Views\Windows\UserEntry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MVVM\Views\Windows\ScreenSharingWindow.xaml.cs">
+      <DependentUpon>ScreenSharingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\Views\Windows\UserEntry.xaml.cs">
+      <DependentUpon>UserEntry.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -164,11 +205,18 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\ScreenSharing\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Icons\microphone-off.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\open-stream.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\start-sharing.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\stop-sharing.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

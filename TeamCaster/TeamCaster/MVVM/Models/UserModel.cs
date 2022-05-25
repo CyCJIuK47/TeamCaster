@@ -1,8 +1,9 @@
 ﻿using System;
 
 namespace TeamCaster.MVVM.Models
-{
-    class UserModel
+{   
+    [Serializable]
+    struct UserModel
     {
         public string Username { get; set; }
     }

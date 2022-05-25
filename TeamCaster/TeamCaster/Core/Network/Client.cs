@@ -23,7 +23,12 @@ namespace TeamCaster.Core.Network
         public TCPClient(string IP, int port)
         {
             _ipPoint = new IPEndPoint(IPAddress.Parse(IP), port);
-            _hostSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            _hostSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+           
+            _hostSocket.SendBufferSize = 65536;
+            _hostSocket.ReceiveBufferSize = 65536;
+            _hostSocket.NoDelay = true;
+            
             _TCPPacketManager = new TCPPacketManager();
         }
 

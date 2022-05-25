@@ -11,6 +11,8 @@ namespace Server
         private IPEndPoint _ipPoint;
         private Socket _listenSocket;
         private List<Socket> _clientPool;
+        
+        private ServerType _serverType;
 
         private ILogger _logger;
 
@@ -24,11 +26,13 @@ namespace Server
             get { return _ipPoint.Port; }
         }
 
-        public TCPServer(string IP, int port, ILogger logger = null)
+        public TCPServer(string IP, int port, ServerType serverType, ILogger logger = null)
         {
             _ipPoint = new IPEndPoint(IPAddress.Parse(IP), port);
-            _listenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            _listenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             _clientPool = new List<Socket>();
+
+            _serverType = serverType;
 
             _logger = logger;
         }
@@ -55,7 +59,7 @@ namespace Server
             }
             catch (Exception ex)
             {
-                _logger?.Log("Server|NewConnection", $"{ex.Message}");
+                _logger?.Log("Server|StartUpFailed", $"{ex.Message}");
             }
         }
 
@@ -88,22 +92,47 @@ namespace Server
 
         private void _onNewClientHandler(Socket newClient)
         {
-            while (true)
+            newClient.SendBufferSize = 65536;
+            newClient.ReceiveBufferSize = 65536;
+
+            newClient.NoDelay = true;
+
+            try
             {
-                try
+                while (true)
                 {
-                    byte[] data = this.Receive(newClient);
+                    byte[] data = Receive(newClient);
 
-                    _logger?.Log("Server", $"Received data from {newClient.RemoteEndPoint}");
+                    _logger?.Log("Server", $"Received data from {newClient.RemoteEndPoint} [{data.Length} bytes]");
 
-                    this.Send(newClient, data);
+                    if (_serverType == ServerType.Echo)
+                    {
+                        Send(newClient, data);
+                    }
+                    else
+                    {
+                        Resend(newClient, data);
+                    }
+
                 }
-                catch
+            }
+            catch
+            {
+                _logger?.Log("Server|ConnectionLost", $"{newClient.RemoteEndPoint}");
+                _clientPool.Remove(newClient);
+            }
+        }
+
+        private void Resend(Socket from, byte[] data)
+        {
+            foreach (Socket client in _clientPool)
+            {
+                if (client != from)
                 {
-                    _logger?.Log("Server|ConnectionLost", $"{newClient.RemoteEndPoint}");
-                    return;
+                    Send(client, data);
                 }
             }
         }
+
     }
 }

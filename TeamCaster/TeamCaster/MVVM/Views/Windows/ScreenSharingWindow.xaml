@@ -1,0 +1,43 @@
+﻿<Window x:Class="TeamCaster.MVVM.Views.Windows.ScreenSharingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TeamCaster" xmlns:viewmodels="clr-namespace:TeamCaster.MVVM.ViewModels"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        mc:Ignorable="d"
+        Title="ScreenSharingWindow" Height="650" Width="1200"
+        Background="#36393F"
+       
+        ResizeMode="CanResizeWithGrip">
+
+    
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+
+        <Canvas x:Name="SharingScene" 
+                Grid.Row="0">
+            <Canvas.InputBindings>
+                <MouseBinding Gesture="RightClick"  Command="{Binding InteractivityViewModel.RightClick}"
+                              CommandParameter="{Binding ElementName=SharingScene}" MouseAction="RightClick" />
+                <MouseBinding Gesture="LeftClick" Command="{Binding InteractivityViewModel.LeftClick}"
+                              CommandParameter="{Binding ElementName=SharingScene}" MouseAction="LeftClick" />
+            </Canvas.InputBindings>
+
+            <Canvas.Background>
+                <ImageBrush ImageSource="{Binding ScreenSharingViewModel.Source}"/>
+            </Canvas.Background>
+            
+        </Canvas>
+
+
+
+
+        
+    </Grid>
+</Window>

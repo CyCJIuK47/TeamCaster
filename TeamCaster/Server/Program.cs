@@ -5,10 +5,28 @@ namespace Server
 {
     class Program
     {
+
         static void Main(string[] args)
         {
-            TCPServer server = new TCPServer("127.0.0.1", 22222, new ConsoleLogger());
-            server.Start();
+            Console.Write("IP: ");
+            string ip = Console.ReadLine();
+
+            Console.Write("Port: ");
+            int port = Int32.Parse(Console.ReadLine());
+            
+            Console.WriteLine();
+
+            try
+            {
+                TCPServer server = new TCPServer(ip, port, ServerType.Resend, new ConsoleLogger());
+                server.Start();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.ReadKey();
+            }
         }
+
     }
 }

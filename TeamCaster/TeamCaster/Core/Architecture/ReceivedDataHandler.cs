@@ -24,7 +24,8 @@ namespace TeamCaster.Core.Architecture
             while (_isRunning)
             {
                 var data = _networkDataReceiver.Receive();
-                Task.Run(() => { _dataPublisher.Publish(data); });
+                //Task.Run(() => { _dataPublisher.Publish(data); });
+                _dataPublisher.Publish(data);
             }
         }
 

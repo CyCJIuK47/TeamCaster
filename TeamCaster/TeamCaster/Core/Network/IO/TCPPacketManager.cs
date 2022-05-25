@@ -5,11 +5,8 @@ namespace TeamCaster.Core.Network.IO
 {
     class TCPPacketManager
     {
-        private BinaryFormatter _binaryFormatter;
-
         public TCPPacketManager()
         {
-            _binaryFormatter = new BinaryFormatter();
         }
 
         public TCPPacket BuildPacket<T>(T data)
@@ -18,17 +15,25 @@ namespace TeamCaster.Core.Network.IO
         }
 
         public byte[] SerializePacket(TCPPacket tcpPacket)
-        {
+        { 
             MemoryStream memoryStream = new MemoryStream();
-            _binaryFormatter.Serialize(memoryStream, tcpPacket);
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            binaryFormatter.Serialize(memoryStream, tcpPacket);
 
+            memoryStream.Close();
             return memoryStream.ToArray();
         }
 
         public TCPPacket DeserializePacket(byte[] tcpPacket)
         {
             MemoryStream memoryStream = new MemoryStream(tcpPacket);
-            TCPPacket deserializedPacket = (TCPPacket)_binaryFormatter.Deserialize(memoryStream);
+            //memoryStream.Seek(0, SeekOrigin.Begin);
+            memoryStream.Position = 0;
+
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            TCPPacket deserializedPacket = (TCPPacket)binaryFormatter.Deserialize(memoryStream);
+
+            memoryStream.Close();
 
             return deserializedPacket;
         }

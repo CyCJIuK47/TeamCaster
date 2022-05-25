@@ -1,24 +1,26 @@
 ﻿using System;
 using System.IO;
-using NAudio;
 using NAudio.Wave;
 using TeamCaster.Core.Architecture.Containers;
+using TeamCaster.Core.Audio.IO.Codecs;
 
 namespace TeamCaster.Core.Audio
 {
     class AudioPlayer
     {
         DataProvider<byte[]> _dataProvider;
-        private NAudio.Wave.DirectSoundOut _outStream;
+        private DirectSoundOut _outStream;
+        private IAudioCodec _audioCodec;
 
         public bool Muted { get; set; }
 
-        public AudioPlayer(DataProvider<byte[]> dataProvider)
+        public AudioPlayer(DataProvider<byte[]> dataProvider, IAudioCodec audioCodec)
         {
             _dataProvider = dataProvider;
+            _audioCodec = audioCodec;
             _dataProvider.DataAvailable += onDataAvailable;
 
-            _outStream = new NAudio.Wave.DirectSoundOut();
+            _outStream = new DirectSoundOut();
             Muted = false;
         }
 
@@ -26,10 +28,10 @@ namespace TeamCaster.Core.Audio
         {
             if (Muted) return;
 
-            IWaveProvider provider = new RawSourceWaveStream(
-                         new MemoryStream(data), new WaveFormat());
+            IWaveProvider waveProvider = new RawSourceWaveStream(new MemoryStream(_audioCodec.Decode(data, 0, data.Length)),
+                                                                 new WaveFormat());
 
-            _outStream.Init(provider);
+            _outStream.Init(waveProvider);
             _outStream.Play();
         }
     }

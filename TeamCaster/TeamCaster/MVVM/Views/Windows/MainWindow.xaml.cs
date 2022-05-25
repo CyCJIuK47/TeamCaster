@@ -54,5 +54,6 @@ namespace TeamCaster
         {
             Application.Current.Shutdown();
         }
+
     }
 }
